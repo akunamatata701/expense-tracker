@@ -50,7 +50,9 @@ exports.getAddExpense = (req, res) => {
   res.render('expense/expense', {
     title: 'Add Expense',
     type: 'Add',
-    expense: {}
+    expense: {
+      date: dateFormat(Date(), "yyyy-mm-dd'T'hh:MM")
+    }
   });
 };
 
