@@ -1,0 +1,57 @@
+extends ../layout
+
+block content
+  .pb-2.mt-2.mb-4.border-bottom
+    h3 Expense Manage
+
+  div.row.border-bottom
+    div.col-md-6
+      form.form-horizontal(method='POST')
+        input(type='hidden', name='_csrf', value=_csrf)
+        .form-group.row
+          label.control-label.col-md-2(for='datefrom') Date From:
+          .col-md-10
+            input.form-control(type='datetime-local', name='datefrom', id='datefrom', autofocus, value=filters.datefrom)
+        .form-group.row
+          label.control-label.col-md-2(for='dateto') Date To:
+          .col-md-10
+            input.form-control(type='datetime-local', name='dateto', id='dateto', value=filters.dateto)
+        .form-group.row
+          label.control-label.col-md-2(for='description') Description:
+          .col-md-10
+            input.form-control(type='text', name='description', id='description', placeholder='Description', value=filters.description)
+        .form-group.row
+          label.control-label.col-md-2(for='comment') Comment:
+          .col-md-10
+            input.form-control(type='text', name='comment', id='comment', placeholder='Comment', value=filters.comment)
+        .form-group
+          .offset-md-2.col-md-10.pl-2
+            button.col-md-3.btn.btn-primary(type='submit')
+              i.fa.fa-filter.fa-sm
+              | Filter
+
+  p.mt-2(align='right')
+    a.btn.btn-raised.btn-sm(href='/expense/add')
+      i.fa.fa-plus.fa-sm
+      | Add
+
+  table#expenses.table.table-hover.table-striped.table-bordered
+    thead
+      tr
+        th #
+        th Date/Time
+        th Description
+        th Amount
+        th Comment
+        th Actions
+      tbody
+        each expense, i in expenses
+          tr
+            td= i + 1
+            td= expense.date.toLocaleString()
+            td= expense.description
+            td= expense.amount
+            td= expense.comment
+            td
+              a.fa.fa-edit(href='/expense/edit/'+expense.id)
+              a.fa.fa-trash-alt(href='/expense/delete/'+expense.id)

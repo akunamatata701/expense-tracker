@@ -137,6 +137,12 @@ app.post('/account/password', passportConfig.isAuthenticated, userController.pos
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
 app.get('/expense', passportConfig.isAuthenticated, expenseController.getExpense);
+app.post('/expense', passportConfig.isAuthenticated, expenseController.postExpense);
+app.get('/expense/add', passportConfig.isAuthenticated, expenseController.getAddExpense);
+app.post('/expense/add', passportConfig.isAuthenticated, expenseController.postAddExpense);
+app.get('/expense/edit/:id', passportConfig.isAuthenticated, expenseController.getEditExpense);
+app.post('/expense/edit/:id', passportConfig.isAuthenticated, expenseController.postEditExpense);
+app.get('/expense/delete/:id', passportConfig.isAuthenticated, expenseController.getDeleteExpense);
 /**
  * Error Handler.
  */

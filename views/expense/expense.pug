@@ -1,0 +1,35 @@
+extends ../layout
+
+block content
+  .pb-2.mt-2.mb-4.border-bottom
+    h3= title
+
+  form.form-horizontal(method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group.row
+      label.control-label.col-md-2(for='date') Date/Time:
+      .col-md-10
+        input.form-control(type='datetime-local', name='date', id='date', autofocus, required, value=expense.date)
+    .form-group.row
+      label.control-label.col-md-2(for='description') Description:
+      .col-md-10
+        textarea.form-control(name='description', id='description', placeholder='Description', required, rows='5')
+          = expense.description
+    .form-group.row
+      label.control-label.col-md-2(for='amount') Amount:
+      .col-md-10
+        input.form-control(type='number', name='amount', id='amount', placeholder='Amount', required, value=expense.amount)
+    .form-group.row
+      label.control-label.col-md-2(for='comment') Comment:
+      .col-md-10
+        textarea.form-control(name='comment', id='comment', placeholder='Comment', rows='5')
+          = expense.comment
+    .form-group
+      .offset-md-2.col-md-10.pl-2
+        button.col-md-3.btn.btn-primary(type='submit')
+          if type == 'Add'
+            i.fa.fa-plus.fa-sm
+            | Add
+          else
+            i.fa.fa-save.fa-sm
+            | Save
