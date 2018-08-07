@@ -1,5 +1,5 @@
-const Expense = require('../models/Expense');
 const dateFormat = require('dateformat');
+const Expense = require('../models/Expense');
 
 /**
  * GET /expense
@@ -11,23 +11,19 @@ exports.getExpense = (req, res, next) => {
 
     res.render('expense/expense_list', {
       title: 'Manage Expense',
-      expenses: expenses,
+      expenses,
       filters: {}
     });
-  })
+  });
 };
 
 exports.postExpense = (req, res, next) => {
-  var query = { userId: req.user.id };
+  const query = { userId: req.user.id };
 
-  if (req.body.datefrom)
-    query.date = { $gte: req.body.datefrom };
-  if (req.body.dateto)
-    query.date = { $lte: req.body.dateto };
-  if (req.body.description)
-    query.description = { $regex: req.body.description };
-  if (req.body.comment)
-    query.comment = { $regex: req.body.comment };
+  if (req.body.datefrom) { query.date = { $gte: req.body.datefrom }; }
+  if (req.body.dateto) { query.date = { $lte: req.body.dateto }; }
+  if (req.body.description) { query.description = { $regex: req.body.description }; }
+  if (req.body.comment) { query.comment = { $regex: req.body.comment }; }
 
   Expense.find(query)
     .exec((err, expenses) => {
@@ -35,7 +31,7 @@ exports.postExpense = (req, res, next) => {
 
       res.render('expense/expense_list', {
         title: 'Manage Expense',
-        expenses: expenses,
+        expenses,
         filters: {
           datefrom: req.body.datefrom || '',
           dateto: req.body.dateto || '',
@@ -43,7 +39,7 @@ exports.postExpense = (req, res, next) => {
           comment: req.body.comment || ''
         }
       });
-    })
+    });
 };
 
 exports.getAddExpense = (req, res) => {
@@ -121,7 +117,7 @@ exports.postEditExpense = (req, res, next) => {
 exports.getDeleteExpense = (req, res, next) => {
   Expense
     .deleteOne({ _id: req.params.id })
-    .exec((err, expense) => {
+    .exec((err) => {
       if (err) { return next(err); }
       req.flash('success', { msg: 'Expense has been deleted.' });
       res.redirect('/expense');
